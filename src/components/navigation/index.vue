@@ -8,15 +8,15 @@
         <!-- <search/> -->
       </div>
       <div class="clh menu">
-        <router-link to="/note">Note</router-link>
+        <router-link to="/notes">Notes</router-link>
         <!-- <router-link to="/posts">Posts</router-link> -->
-        <router-link to="/progress">Progress</router-link>
+        <router-link to="/targets">Targets</router-link>
       </div>
       <div class="clh profile">
         <router-link to="/login">
           <el-button round>Sign in</el-button>
         </router-link>
-        <router-link to="/login">
+        <router-link to="/register">
           <el-button type="primary" round>Create</el-button>
         </router-link>
       </div>
@@ -28,9 +28,9 @@
 // import search from "./../components/navigation/search"
 
 export default {
-  name: "navigation",
+  name: "Navigation",
   components: {
-    // search
+    // search/
   }
 }
 </script>
@@ -45,7 +45,7 @@ export default {
     width: 100%;
     height: 60px;
     background-color: #fff;
-    /* box-shadow: 0 2px 10px rgba(0, 0, 0, .07); */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
   }
 
   /* container */
