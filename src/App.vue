@@ -17,11 +17,17 @@
 </script>
 
 <style>
-  body {
-    margin: 0;
+  html, body {
+    margin:0; 
+    padding:0; 
+    height:100%; 
     font-family: 'Roboto', sans-serif;
   }
   a {
     color: royalblue;
+    text-decoration: none;
+  }
+  #app {
+    height: 100%;
   }
 </style>

@@ -1,10 +1,12 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
-import Home from "../layouts/Home.vue"
-import Login from "../layouts/Login.vue"
-import Register from "../layouts/Register.vue"
-import Notes from "../layouts/Notes.vue"
-import Targets from "../layouts/Targets.vue"
+import Home from "../layouts/Home"
+import Login from "../layouts/Login"
+import Register from "../layouts/Register"
+import Notes from "../layouts/Notes"
+import Targets from "../layouts/Targets"
+import Profile from "../layouts/Profile"
+import Settings from "../layouts/Settings"
 
 Vue.use(VueRouter);
 
@@ -23,6 +25,16 @@ const routes = [
     path: "/register",
     name: "register",
     component: Register
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: Profile
+  },
+  {
+    path: "/profile/settings",
+    name: "settings",
+    component: Settings
   },
   {
     path: "/notes",
