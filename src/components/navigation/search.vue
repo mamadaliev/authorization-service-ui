@@ -2,7 +2,7 @@
   <el-autocomplete style="width: 220px;"
     v-model="state"
     :fetch-suggestions="querySearchAsync"
-    placeholder="Search..."
+    :placeholder="$t('search_placeholder')"
     @select="handleSelect"
   ></el-autocomplete>
 </template>
@@ -22,13 +22,13 @@ export default {
   methods: {
       loadAll() {
         return [
-          { "value": "vue", "link": "https://github.com/vuejs/vue" },
-          { "value": "element", "link": "https://github.com/ElemeFE/element" },
-          { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-          { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-          { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-          { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-          { "value": "babel", "link": "https://github.com/babel/babel" }
+          { "value": "My story", "link": "https://github.com/vuejs/vue" },
+          { "value": "My Tutorial", "link": "https://github.com/ElemeFE/element" },
+          { "value": "Step by step", "link": "https://github.com/ElemeFE/cooking" },
+          { "value": "My name is", "link": "https://github.com/ElemeFE/mint-ui" },
+          { "value": "My game", "link": "https://github.com/vuejs/vuex" },
+          { "value": "My old university", "link": "https://github.com/vuejs/vue-router" },
+          { "value": "Where is Korobov", "link": "https://github.com/babel/babel" }
          ];
       },
       querySearchAsync(queryString, cb) {
@@ -38,7 +38,7 @@ export default {
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
           cb(results);
-        }, 3000 * Math.random());
+        }, 1 * Math.random());
       },
       createFilter(queryString) {
         return (link) => {

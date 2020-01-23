@@ -1,5 +1,5 @@
 <template>
   <div>
-    <el-button type="success" plain>Home</el-button>
+    Home
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header" v-if="getAuth.isLogged">
     <div class="container">
       <div class="clh logo">
         <router-link to="/"></router-link>
@@ -8,9 +8,9 @@
         <search/>
       </div>
       <div class="clh menu">
-        <router-link to="/notes">Notes</router-link>
+        <router-link to="/notes">{{ $t('notes') }}</router-link>
         <!-- <router-link to="/posts">Posts</router-link> -->
-        <router-link to="/targets">Targets</router-link>
+        <router-link to="/targets">{{ $t('targets') }}</router-link>
       </div>
       <div class="clh profile" v-loading="this.getAuth.isLogging">
         <span v-if="!getAuth.isLogged">
@@ -26,34 +26,74 @@
           <div style="float:right">
             <el-dropdown trigger="click">
               <span class="el-dropdown-link link">
-                <el-avatar src="https://miro.medium.com/fit/c/256/256/2*TcVmfN1YLNDzz4NYofiv6Q.jpeg" 
-                style="float:left;display:table;margin:10px 0;"> {{ getUser.username }} </el-avatar>
+                <el-tooltip class="item" effect="dark" :content="getUser.username" placement="left">
+                  <el-avatar src="https://miro.medium.com/fit/c/256/256/2*TcVmfN1YLNDzz4NYofiv6Q.jpeg" 
+                  style="float:left;display:table;margin:10px 0;"> {{ getUser.username }} </el-avatar>
+                </el-tooltip>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="el-icon-user" class="menu-link">
-                  <router-link to="/profile">My profile</router-link>
-                </el-dropdown-item>
+                <router-link to="/profile">
+                  <el-dropdown-item icon="el-icon-user">My profile</el-dropdown-item>
+                </router-link>
                 <el-dropdown-item icon="el-icon-circle-plus">Create note</el-dropdown-item>
                 <el-dropdown-item icon="el-icon-circle-plus-outline">Create group</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-setting">Settings</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-unlock">
-                  <a href="" @click="fetchLogout()">Logout</a>
-                </el-dropdown-item>
+                <router-link to="/profile/settings">
+                  <el-dropdown-item icon="el-icon-setting">Settings</el-dropdown-item>
+                </router-link>
+                <a href="" @click="fetchLogout()">
+                  <el-dropdown-item icon="el-icon-unlock">Logout</el-dropdown-item>
+                </a>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
           <div style="float:right">
             <el-dropdown trigger="click">
-              <span class="el-dropdown-link link">
-                <el-badge :value="2" class="notify-count">
+              <span class="el-dropdown-link">
+                <el-badge :value="5" class="notify-count">
                 </el-badge>
                 <i class="notify el-icon-message-solid"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
                 <div class="notifications">
-                  <div class="notification">Notification 1</div>
-                  <div class="notification">Notification 2</div>
+                  <div class="notification">
+                    <span class="title">Test notification 5</span>
+                    <span class="body">Someone text of notification.</span>
+                  </div>
+                  <div class="notification">
+                    <span class="title">Test notification 4</span>
+                    <span class="body">Someone text of notification.</span>
+                  </div>
+                  <div class="notification">
+                    <span class="title">Test notification 3</span>
+                    <span class="body">Someone text of notification.</span>
+                  </div>
+                  <div class="notification">
+                    <span class="title">Test notification 2</span>
+                    <span class="body">Someone text of notification.</span>
+                  </div>
+                  <div class="notification">
+                    <span class="title">Test notification 1</span>
+                    <span class="body">Someone text of notification.</span>
+                  </div>
                 </div>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+          <div style="float:right">
+            <el-dropdown trigger="click">
+              <span class="el-dropdown-link">
+                <flag iso="us"/> English <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <a @click="setLocale('us')">
+                  <el-dropdown-item><flag iso="us"/> English</el-dropdown-item>
+                </a>
+                <a @click="setLocale('ru')">
+                  <el-dropdown-item><flag iso="ru"/> Русский</el-dropdown-item>
+                </a>
+                <a @click="setLocale('de')">
+                  <el-dropdown-item><flag iso="de"/> Deutch</el-dropdown-item>
+                </a>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -82,6 +122,12 @@
     },
     methods: {
       ...mapActions(["fetchNewTokens", "fetchCurrentUser", "fetchLogout"]),
+      setLocale(locale) {
+        import(`./../../langs/${locale}.json`).then((messages) =>  {
+          this.$i18n.setLocaleMessage(locale, messages)
+          this.$i18n.locale = locale
+        })
+      },
     },
     created() {
       this.fetchNewTokens();
@@ -155,8 +201,9 @@
     text-decoration: none;
     color: #777;
   }
-  .header .container .profile .link {
+  .el-dropdown-link {
     cursor: pointer;
+    outline: none;
   }
   .avatar {
     float: left;
@@ -180,18 +227,64 @@
     line-height: 60px;
   }
   .notifications {
-    display: table;
-    width: 220px;
+    display: block;
+    width: 320px;
     min-height: 50px;
     max-height: 320px;
+    height: 200px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
   }
+  /* .notifications::-webkit-scrollbar {
+    display: none;
+  } */
   .notifications .notification {
-    width: 100%;
+    display: block;
+    padding: 10px;
+    width: calc(100% - 20px);
     height: 50px;
+    font-size: 14px;
+  }
+  .notifications .notification:hover {
+    background-color: #ecf5ff;
+    cursor: pointer;
+  }
+  .notifications .notification:hover .title{
+    color: #66b1ff;
+  }
+  .notifications .notification .title {
+    display: table;
+    font-weight: bold;
+    line-height: 22px;
+    /* color: #409eff; */
+  }
+  .notifications .notification .body {
+    font-size: 12px;
+    line-height: 18px;
+    color: #606266;
   }
 
   /* container line height */
   .clh {
     line-height: 60px;
+  }
+  /* width */
+  .notifications::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  /* Track */
+  .notifications::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+  
+  /* Handle */
+  .notifications::-webkit-scrollbar-thumb {
+    background: #C0C4CC;
+  }
+
+  /* Handle on hover */
+  .notifications::-webkit-scrollbar-thumb:hover {
+    background: #606266;
   }
 </style>
