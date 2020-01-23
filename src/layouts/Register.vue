@@ -7,14 +7,14 @@
             <el-input placeholder="Username" v-model="user.username" clearable></el-input>
           </el-form-item>
           <el-form-item prop="name">
-            <el-input placeholder="Email" v-model="user.password" clearable></el-input>
+            <el-input placeholder="Email" v-model="user.email" clearable></el-input>
           </el-form-item>
           <el-form-item prop="name">
             <el-input placeholder="Password" v-model="user.password" show-password></el-input>
           </el-form-item>
           <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">Create account</el-button>
-              <el-button type="solid" @click="resetForm('ruleForm')">Clear</el-button>
+              <el-button type="primary" @click="register()" :loading="getAuth.isLogging">Create account</el-button>
+              <!-- <el-button type="solid" @click="resetForm('ruleForm')">Clear</el-button> -->
           </el-form-item>
         </el-form>
       </div>
@@ -23,14 +23,29 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex'
+
   export default {
     name: "register",
     data() {
       return {
         user: {
           username: '',
+          email: '',
           password: ''
         }
+      }
+    },
+    components: {},
+    computed: {
+      ...mapGetters(["getUser", "getAuth"])
+    },
+    methods: {
+      ...mapActions(["fetchRegister"]),
+      // Create a new user
+      register() {
+        console.log(this.user);
+        this.fetchRegister(this.user);
       }
     }
   }
