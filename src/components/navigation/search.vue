@@ -55,5 +55,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+  .header .container .search .el-autocomplete .el-input input.el-input__inner {
+    border-radius: 20px;
+  }
 </style>
